@@ -4,14 +4,17 @@ import chapter3.Cons
 import chapter3.List
 import chapter3.List.Companion.empty
 import chapter3.Nil
+import chapter3.foldLeft
 import chapter3.foldRight
+import chapter3.reverse
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
 import utils.SOLUTION_HERE
 
 // tag::init[]
 fun <A> filter(xs: List<A>, f: (A) -> Boolean): List<A> =
-    foldRight(xs, empty(), {a, ls -> if(f(a)){Cons(a, ls)} else {ls} } )
+    reverse(foldLeft(xs, empty(), {ls, a -> if(f(a)){Cons(a, ls)} else {ls} } ))
+    // foldRight(xs, empty(), {a, ls -> if(f(a)){Cons(a, ls)} else {ls} } )
 
 // end::init[]
 

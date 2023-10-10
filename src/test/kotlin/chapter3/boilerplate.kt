@@ -1,15 +1,30 @@
 package chapter3
 
-fun <A, B> foldRight(xs: List<A>, z: B, f: (A, B) -> B): B =
-    when (xs) {
-        is Nil -> z
-        is Cons -> f(xs.head, foldRight(xs.tail, z, f))
+fun <A, B> foldRight(xs: List<A>, z: B, f: (A, B) -> B): B {
+    return when (xs) {
+        is Nil -> {
+            println("> $z\t")
+            z
+        }
+        is Cons -> {
+            val r = f(xs.head, foldRight(xs.tail, z, f))
+            println("> ${xs.head}\t$r\t")
+            r
+        }
     }
+}
 
 tailrec fun <A, B> foldLeft(xs: List<A>, z: B, f: (B, A) -> B): B =
     when (xs) {
-        is Nil -> z
-        is Cons -> foldLeft(xs.tail, f(z, xs.head), f)
+        is Nil -> {
+            println("$z")
+            z
+       }
+        is Cons ->  {
+            val r = foldLeft(xs.tail, f(z, xs.head), f)
+            println("> ${xs.head}: $r")
+            r
+        }
     }
 
 fun <A, B> foldLeftR(xs: List<A>, z: B, f: (B, A) -> B): B =

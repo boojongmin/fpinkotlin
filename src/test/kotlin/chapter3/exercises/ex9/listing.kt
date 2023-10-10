@@ -5,7 +5,6 @@ import chapter3.List
 import chapter3.Nil
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
-import utils.SOLUTION_HERE
 
 // tag::init[]
 // tailrec fun foldLeft(xs: List<Int>, z: Int, f: (Int, Int) -> Int): Int =
@@ -14,11 +13,19 @@ import utils.SOLUTION_HERE
 //         is Cons -> foldLeft(xs.tail, f(z, xs.head), f)
 //     }
 
-tailrec fun <A, B> foldLeft(xs: List<A>, z: B, f: (B, A) -> B): B =
-    when(xs) {
-        is Nil -> z
-        is Cons -> foldLeft(xs.tail, f(z, xs.head), f)
+tailrec fun <A, B> foldLeft(xs: List<A>, z: B, f: (B, A) -> B): B {
+    return when(xs) {
+        is Nil -> {
+            println("> $z\t")
+            z
+        }
+        is Cons -> {
+            val r = foldLeft(xs.tail, f(z, xs.head), f)
+            println("> ${f(z, xs.head)}: $r\t")
+            r
+        }
     }
+}
 
 // end::init[]
 
@@ -31,9 +38,10 @@ class Exercise9 : WordSpec({
             val xs = List.of(0, 1, 2, 3,  4, 5)
             foldLeft(
                 xs,
-                0,
-                // { x, y -> x + y }) shouldBe 20
-            { x, y -> x + y }) shouldBe 15
+                0
+            )
+            // { x, y -> x + y }) shouldBe 20
+            { x, y -> x + y } shouldBe 15
         }
     }
 })
