@@ -9,14 +9,21 @@ import utils.SOLUTION_HERE
 
 // tag::init[]
 fun <A> size(tree: Tree<A>): Int =
+    when(tree) {
+        is Branch -> {
+            1 + size(tree.left) + size(tree.right)
+        }
+        is Leaf -> {
+            1
+        }
+    }
 
-    SOLUTION_HERE()
 // end::init[]
 
 //TODO: Enable tests by removing `!` prefix
 class Exercise24 : WordSpec({
     "tree size" should {
-        "!determine the total size of a tree" {
+        "determine the total size of a tree" {
             val tree =
                 Branch(
                     Branch(Leaf(1), Leaf(2)),

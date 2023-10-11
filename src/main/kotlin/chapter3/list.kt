@@ -1,16 +1,12 @@
 package chapter3
 
-import chapter5.sec1.a
-
 sealed class List<out A> {
     companion object {
         tailrec fun <A> of(vararg aa: A): List<A> {
             val tail = aa.sliceArray(1 until aa.size)
             return if (aa.isEmpty()) {
-               // println("\t Nil")
-               Nil
-            }  else {
-                // print("\t ${aa[0]}")
+                Nil
+            } else {
                 Cons(aa[0], of(*tail))
             }
         }
@@ -30,8 +26,6 @@ sealed class List<out A> {
             }
         }
     }
-
-
     fun reverse(): List<A> =
         foldLeft(this, empty(), { t: List<A>, h: A -> Cons(h, t) })
 }
